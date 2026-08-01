@@ -17,6 +17,7 @@ SCRIPTS = {
     "Python Scripts": {
         "email_testing.py": "python/email_testing.py",
         "nginx_virtualhost_setup.py": "python/nginx_virtualhost_setup.py",
+        "ssh_connect.py": "python/ssh_connect.py",
     }
 }
 
