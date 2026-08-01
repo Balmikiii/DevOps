@@ -28,6 +28,8 @@ This project provides ready-to-use automation scripts that make these tasks fast
 ```
 DevOps/
 
+├── menu.py
+│
 ├── README.md
 │
 ├── bash/
@@ -42,6 +44,7 @@ DevOps/
 │
     ├── email_testing.py
     └── nginx_virtualhost_setup.py
+    └── ssh_connect.py
 ```
 
 ---
@@ -52,7 +55,6 @@ DevOps/
 
 Supported:
 
-- Ubuntu 20.04+
 - Ubuntu 22.04+
 - Debian based Linux systems
 
@@ -113,7 +115,15 @@ Now run the required script according to your requirement.
 
 
 ## 🖥️ 1. Server Basic Setup
+### Menu
 
+```
+python menu.py
+```
+
+### Description
+
+List all menus
 
 ### Script
 
@@ -323,6 +333,33 @@ Useful for:
 - Multiple websites
 - Nginx based servers
 
+
+---
+
+## 🌍 8. Connect SSH if exist details in ~/.ssh/config
+
+
+### Script
+
+```
+python/ssh_connect.py
+```
+
+
+### Run Command
+
+```bash
+sudo python3 python/ssh_connect.py
+```
+
+
+### Description
+
+This script detect you system configs ssh host name.
+
+Useful for:
+
+- List all ssh name
 
 ---
 
