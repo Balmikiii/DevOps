@@ -1,84 +1,61 @@
 import os
 import subprocess
 
-
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+def find_scripts():
+    scripts = []
+    folders = ["bash", "python"]
+    for folder in folders:
+        folder_path = os.path.join(BASE_DIR, folder)
+        if not os.path.exists(folder_path):
+            continue
+        for file in sorted(os.listdir(folder_path)):
+            full_path = os.path.join(folder_path, file)
+            if os.path.isfile(full_path):
+                if file.endswith((".sh", ".py")):
+                    scripts.append({
+                        "name": file,
+                        "path": full_path
+                    })
+    return scripts
 
-SCRIPTS = {
-    "Bash Scripts": {
-        "apache_virtualhost_setup.sh": "bash/apache_virtualhost_setup.sh",
-        "basic_tool_install_on_the_server.sh": "bash/basic_tool_install_on_the_server.sh",
-        "change_php_version.sh": "bash/change_php_version.sh",
-        "create_db.sh": "bash/create_db.sh",
-        "laravel_project_setup.sh": "bash/laravel_project_setup.sh",
-    },
-
-    "Python Scripts": {
-        "email_testing.py": "python/email_testing.py",
-        "nginx_virtualhost_setup.py": "python/nginx_virtualhost_setup.py",
-        "ssh_connect.py": "python/ssh_connect.py",
-    }
-}
-
-
-def run_script(path):
-
-    full_path = os.path.join(BASE_DIR, path)
-
-    print("\nRunning:", full_path)
+def run_script(script):
+    print("\nRunning:", script["name"])
     print("-" * 40)
 
-    if path.endswith(".sh"):
-        subprocess.run(["bash", full_path])
-
-    elif path.endswith(".py"):
-        subprocess.run(["python", full_path])
-
+    if script["name"].endswith(".sh"):
+        subprocess.run(
+            ["bash", script["path"]]
+        )
+    elif script["name"].endswith(".py"):
+        subprocess.run(
+            ["py", script["path"]]
+        )
 
 def main():
-
     while True:
-
+        scripts = find_scripts()
         print("\n========== DEVOPS MENU ==========\n")
 
-        options = []
-
-        count = 1
-
-        for category, scripts in SCRIPTS.items():
-
-            print(f"\n[{category}]")
-
-            for name, path in scripts.items():
-                print(f"{count}. {name}")
-
-                options.append(path)
-                count += 1
-
-
+        for i, script in enumerate(scripts, start=1):
+            print(f"{i}. {script['name']}")
         print("\n0. Exit")
-
-
         choice = input("\nSelect script: ")
 
-
         if choice == "0":
-            print("Bye...")
             break
-
-
         try:
             choice = int(choice)
 
-            if 1 <= choice <= len(options):
-                run_script(options[choice-1])
+            if 1 <= choice <= len(scripts):
+                run_script(
+                    scripts[choice-1]
+                )
             else:
                 print("Invalid option")
-
         except ValueError:
             print("Enter number only")
-
 
 if __name__ == "__main__":
     main()
